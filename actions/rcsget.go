@@ -77,21 +77,13 @@ func gitGet(srcurl string, dest string) {
     return
   }
 
-  last_slash := strings.LastIndex(srcurl, "/")
-  var reponame string
-  if hash == -1 {
-    reponame = srcurl[last_slash:]
-  } else {
-    reponame = srcurl[last_slash:hash]
-  }
-
   // this is where we reset to the named hash
   here, wd_err := os.Getwd()
   if (wd_err != nil) {
     println("Error getting current working directory.")
     os.Exit(3)
   }
-  os.Chdir(path.Join(_dest, reponame))
+  os.Chdir(_dest)
   c = exec.Command("git", "checkout", srcurl[hash+1:])
 
   hash_err := c.Run()
